@@ -264,6 +264,16 @@ abort() {
   fi;
   exit 1;
 }
+
+do_gkicheck() {
+  [ "$(file_getprop anykernel.sh do.gkicheck)" == 1 ] || return 1;
+  if [ -e "/dev/block/bootdevice/by-name/vendor_boot" ]; then
+    ui_print "GKI: true";
+  else
+    abort " " "Not a GKI device. Aborting...";
+  fi
+}
+
 do_devicecheck() {
   [ "$(file_getprop anykernel.sh do.devicecheck)" == 1 ] || return 1;
   local device devicename match product testname vendordevice vendorproduct;
@@ -479,6 +489,7 @@ ui_print " ";
 setup_env;
 
 do_devicecheck;
+do_gkicheck;
 do_versioncheck;
 do_levelcheck;
 

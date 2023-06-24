@@ -4,15 +4,16 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=KernelSU for Exynos1280
-do.devicecheck=1
+kernel.string=KernelSU (Exynos GKI)
+do.devicecheck=0
+do.gkicheck=1
 do.modules=0
 do.systemless=1
 do.cleanup=1
 do.cleanuponabort=0
-device.name1=a33x
-device.name2=a53x
-device.name3=m33x
+device.name1=exynos
+device.name2=
+device.name3=
 device.name4=
 device.name5=
 supported.versions=
