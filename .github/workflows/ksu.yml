@@ -1,5 +1,5 @@
 
-name: Build recovery
+name: KernelSU CI
 
 on:
   schedule:
