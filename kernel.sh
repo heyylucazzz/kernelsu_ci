@@ -2,7 +2,7 @@
 
 TG_TOKEN=$1
 TG_CHAT=$2
-TAG=$3
+TAG="$(curl -s https://api.github.com/repos/tiann/KernelSU/releases/latest | jq -r '.tag_name')"
 
 if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ] || [ -z "$TAG" ]; then
     echo "Vars are not setup properly!"
