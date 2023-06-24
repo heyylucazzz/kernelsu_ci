@@ -45,5 +45,5 @@ jobs:
         rm -rf scripts
         echo "Installing python..."
         sudo apt-get install python3 python2 -y &>/dev/null ||  sudo apt-get install python3 -y &>/dev/null || sudo apt-get install python -y &>/dev/null || true
-        chmod 0755 ci.sh
-        ./ci.sh "${{ secrets.BOT_TOKEN }}" "${{ secrets.CHAT_ID }}"
+        chmod 0755 kernel.sh
+        ./kernel.sh "${{ secrets.BOT_TOKEN }}" "${{ secrets.CHAT_ID }}"
