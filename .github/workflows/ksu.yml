@@ -19,6 +19,9 @@ jobs:
         git config --global user.name Gabriel2392
         git config --global user.email gabriel824m@gmail.com
         latest_tag=$(curl -s https://api.github.com/repos/tiann/KernelSU/releases/latest | jq -r '.tag_name')
+        if [ "$latest_tag" == "null" ]; then
+          exit 1
+        fi
         touch latest_tag
         current_latest_tag=$(cat latest_tag)
         if [ "$latest_tag" == "$current_latest_tag" ]; then
