@@ -16,8 +16,8 @@ jobs:
     - name: Check
       run: |
         sudo apt-get install curl git jq -y || sudo apt-get install curl git jq -y || true
-        git config --global user.name Gabriel2392
-        git config --global user.email gabriel824m@gmail.com
+        git config --global user.name lucazzzkk
+        git config --global user.email m07403441@gmail.com
         latest_tag=$(curl -s https://api.github.com/repos/tiann/KernelSU/releases/latest | jq -r '.tag_name')
         if [ "$latest_tag" == "null" ]; then
           exit 1
