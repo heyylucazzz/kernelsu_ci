@@ -13,8 +13,9 @@ KZIP="$(pwd)/Kernel"
 cd ~
 mkdir kernel; cd kernel
 git config --global color.ui true
-git config --global user.name lucazzzkk 
+git config --global user.name lucazzzkk
 git config --global user.email m07403441@gmail.com
+sudo apt-get install bc flex libelf-dev dwarves -y
 
 function tg_sendFile() {
 		curl -s "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
@@ -40,7 +41,6 @@ today=$(date +%y%m%d)
 
 HOME="$(pwd)"
 git clone https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r416183b "$HOME/clang-r416183b" --depth=1
-sudo apt-get install bc flex libelf-dev dwarves -y
 git clone https://android.googlesource.com/platform/prebuilts/build-tools "$HOME/build-tools" --depth=1
 
 export CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-"
@@ -50,9 +50,9 @@ export ANDROID_MAJOR_VERSION=t
 export PATH="$HOME/clang-r416183b/bin:$PATH"
 export PATH="$HOME/build-tools/path/linux-x86:$PATH"
 export TARGET_SOC=s5e8535
+export LLVM=1 LLVM_IAS=1
 export STACK_CHECK_MAX_FRAME_SIZE=16096
 export CONFIG_FRAME_WARN=16096
-export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
 EXTRA_FLAGS="LOCALVERSION=-KernelSU-${TAG}"
 
@@ -62,8 +62,8 @@ for branch in $branches; do
     curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash - || continue
     kversion=$(awk -F= '/^VERSION =/ {v=$2} /^PATCHLEVEL =/ {p=$2} /^SUBLEVEL =/ {s=$2} END {gsub(/ /,"",v); gsub(/ /,"",p); gsub(/ /,"",s); print v"."p"."s}' Makefile | sort)
     echo "Building $kversion"
-    make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=Gabriel KBUILD_BUILD_HOST=KSUCI a14x_defconfig || continue
-    make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=Gabriel KBUILD_BUILD_HOST=KSUCI || continue
+    make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI a14x_defconfig || continue
+    make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI || continue
     cp "arch/arm64/boot/Image" "${KZIP}/Image"
     cd "$KZIP"
     zip -r "KernelSU_${TAG}-${kversion}.zip" ./
