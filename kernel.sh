@@ -54,6 +54,8 @@ export PATH="$HOME/build-tools/path/linux-x86:$PATH"
 export TARGET_SOC=s5e8535
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
+export STACK_CHECK_MAX_FRAME_SIZE=16096
+export CONFIG_FRAME_WARN=16096
 EXTRA_FLAGS="LOCALVERSION=-KernelSU-${TAG}"
 
 
