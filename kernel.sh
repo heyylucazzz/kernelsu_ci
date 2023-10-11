@@ -42,6 +42,7 @@ branches=$(curl -s "https://api.github.com/repos/lucazzzkk/android_kernel_samsun
 
 HOME="$(pwd)"
 git clone https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r416183b "$HOME/clang-r416183b" --depth=1
+sudo apt-get install bc flex libelf-dev dwarves -y
 git clone https://android.googlesource.com/platform/prebuilts/build-tools "$HOME/build-tools" --depth=1
 
 export CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-"
