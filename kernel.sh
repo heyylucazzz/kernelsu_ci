@@ -42,6 +42,7 @@ branches=$(curl -s "https://api.github.com/repos/lucazzzkk/android_kernel_samsun
 
 HOME="$(pwd)"
 git clone https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r416183b "$HOME/clang-r416183b" --depth=1
+sudo apt-get install bc flex libelf-dev dwarves -y
 git clone https://android.googlesource.com/platform/prebuilts/build-tools "$HOME/build-tools" --depth=1
 
 export CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-"
@@ -51,6 +52,8 @@ export ANDROID_MAJOR_VERSION=t
 export PATH="$HOME/clang-r416183b/bin:$PATH"
 export PATH="$HOME/build-tools/path/linux-x86:$PATH"
 export TARGET_SOC=s5e8535
+export STACK_CHECK_MAX_FRAME_SIZE=16096
+export CONFIG_FRAME_WARN=16096
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
 EXTRA_FLAGS="LOCALVERSION=-KernelSU-${TAG}"
