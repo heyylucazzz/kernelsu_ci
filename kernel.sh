@@ -56,18 +56,16 @@ export CONFIG_FRAME_WARN=16096
 export ARCH=arm64
 EXTRA_FLAGS="LOCALVERSION=-KernelSU-${TAG}"
 
-
-for branch in $branches; do
-    cd src
-    curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash - || continue
-    kversion=$(awk -F= '/^VERSION =/ {v=$2} /^PATCHLEVEL =/ {p=$2} /^SUBLEVEL =/ {s=$2} END {gsub(/ /,"",v); gsub(/ /,"",p); gsub(/ /,"",s); print v"."p"."s}' Makefile | sort)
-    echo "Building $kversion"
-    make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI a14x_defconfig || continue
-    make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI || continue
-    cp "arch/arm64/boot/Image" "${KZIP}/Image"
-    cd "$KZIP"
-    zip -r "KernelSU_${TAG}-${kversion}.zip" ./
-    tg_sendFile "KernelSU_${TAG}-${kversion}.zip" "KernelSU version: ${TAG}${n}Kernel version: ${kversion}" || tg_sendFile "KernelSU_${TAG}-${kversion}.zip" "KernelSU version: ${TAG}${n}Kernel version: ${kversion}" || exit 1
-    rm -f Image "KernelSU_${TAG}-${kversion}.zip"
-    cd $HOME
+cd src
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash - || continue
+kversion=$(awk -F= '/^VERSION =/ {v=$2} /^PATCHLEVEL =/ {p=$2} /^SUBLEVEL =/ {s=$2} END {gsub(/ /,"",v); gsub(/ /,"",p); gsub(/ /,"",s); print v"."p"."s}' Makefile | sort)
+echo "Building $kversion"
+make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI a14x_defconfig || continue
+make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI || continue
+cp "arch/arm64/boot/Image" "${KZIP}/Image"
+cd "$KZIP"
+zip -r "KernelSU_${TAG}-${kversion}.zip" ./
+tg_sendFile "KernelSU_${TAG}-${kversion}.zip" "KernelSU version: ${TAG}${n}Kernel version: ${kversion}" || tg_sendFile "KernelSU_${TAG}-${kversion}.zip" "KernelSU version: ${TAG}${n}Kernel version: ${kversion}" || exit 1
+rm -f Image "KernelSU_${TAG}-${kversion}.zip"
+cd $HOME
 done
