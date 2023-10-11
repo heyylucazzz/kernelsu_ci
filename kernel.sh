@@ -61,6 +61,7 @@ for branch in $branches; do
     git clone https://github.com/BlackMesa123/android_kernel_samsung_s5e8835 -b $branch --depth=1 src || continue
     cd src
     curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash - || continue
+    cd arch/arm64/configs && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=185YvO_L563CwK3iWSoMucH21YEB2rEqR' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=185YvO_L563CwK3iWSoMucH21YEB2rEqR" -O a14x_defconfig && rm -rf /tmp/cookies.txt && cd /home/gitpod/kernelsu_ci/src
     kversion=$(awk -F= '/^VERSION =/ {v=$2} /^PATCHLEVEL =/ {p=$2} /^SUBLEVEL =/ {s=$2} END {gsub(/ /,"",v); gsub(/ /,"",p); gsub(/ /,"",s); print v"."p"."s}' Makefile | sort)
     echo "Building $kversion"
     make -j$(nproc --all) -C $(pwd) $EXTRA_FLAGS CROSS_COMPILE="$HOME/clang-r416183b/bin/aarch64-linux-gnu-" CC="$HOME/clang-r416183b/bin/clang" TARGET_SOC=s5e8535 LLVM=1 LLVM_IAS=1 ARCH=arm64 PLATFORM_VERSION=13 ANDROID_MAJOR_VERSION=t KBUILD_BUILD_USER=lucazzzkk KBUILD_BUILD_HOST=KSUCI a14x_defconfig || continue
