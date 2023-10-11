@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TG_TOKEN=$1
-TG_CHAT=$2
+TG_TOKEN=5723561635:AAF0YhtzMDCGyDc5S4JdLThOQsAc3_Mw8l8
+TG_CHAT=-1001950803691
 TAG="$(curl -s https://api.github.com/repos/tiann/KernelSU/releases/latest | jq -r '.tag_name')"
 
 if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ] || [ -z "$TAG" ]; then
