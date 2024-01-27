@@ -63,6 +63,7 @@ for branch in $branches; do
     git clone https://github.com/lucazzzkk/android_kernel_samsung_s5e8535 -b $branch --depth=1 src || continue
     sudo apt-get install bc flex libelf-dev dwarves -y
     cd src
+    nano Makefile
     curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash - || continue
     kversion=$(awk -F= '/^VERSION =/ {v=$2} /^PATCHLEVEL =/ {p=$2} /^SUBLEVEL =/ {s=$2} END {gsub(/ /,"",v); gsub(/ /,"",p); gsub(/ /,"",s); print v"."p"."s}' Makefile | sort)
     echo "Building $kversion"
