@@ -55,7 +55,7 @@ export CONFIG_FRAME_WARN=16096
 export TARGET_SOC=s5e8535
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
-EXTRA_FLAGS="LOCALVERSION=-KernelSU-${TAG}"
+EXTRA_FLAGS="LOCALVERSION= KBUILD_BUILD_HOST=compiuterkk"
 
 
 for branch in $branches; do
