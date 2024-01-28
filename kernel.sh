@@ -38,7 +38,7 @@ n='
 tg_sendText "Starting KernelSU CI Builds ($TAG)"
 today=$(date +%y%m%d)
 
-branches=$(curl -s "https://api.github.com/repos/lucazzzkk/android_kernel_samsung_s5e8535/branches" | jq -r '.[].name')
+branches=$(curl -s "https://api.github.com/repos/Gabriel2392/android_kernel_samsung_s5e8535/branches" | jq -r '.[].name')
 
 HOME="$(pwd)"
 git clone https://gitlab.com/OhMyVenyx/clang-r450784e "$HOME/clang-r450784e" --depth=1
@@ -60,7 +60,7 @@ EXTRA_FLAGS="LOCALVERSION=-KernelSU-${TAG}"
 
 for branch in $branches; do
     rm -rf src
-    git clone https://github.com/lucazzzkk/android_kernel_samsung_s5e8535 -b $branch --depth=1 src || continue
+    git clone https://github.com/Gabriel2392/android_kernel_samsung_s5e8535 -b $branch --depth=1 src || continue
     sudo apt-get install bc flex libelf-dev dwarves -y
     cd src
     nano Makefile
