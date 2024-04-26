@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TG_TOKEN=5723561635:AAF0YhtzMDCGyDc5S4JdLThOQsAc3_Mw8l8
-TG_CHAT=-1001950803691
+TG_TOKEN=${BOT_TOKEN_ID}
+TG_CHAT=${TG_CHAT_ID}
 TAG="$(curl -s https://api.github.com/repos/tiann/KernelSU/releases/latest | jq -r '.tag_name')"
 
 if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ] || [ -z "$TAG" ]; then
@@ -14,7 +14,7 @@ cd ~
 mkdir kernel; cd kernel
 git config --global color.ui true
 git config --global user.name lucazzzkk
-git config --global user.email m07403441@gmail.com
+git config --global user.email heyylucazzz@google.com
 
 function tg_sendFile() {
 		curl -s "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
